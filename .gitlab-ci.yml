@@ -7,6 +7,5 @@ image: busybox:latest
 test1:
   stage: test
   script: 
-    - ls -l
     - sh script.sh 
     - ls $HOME/test
