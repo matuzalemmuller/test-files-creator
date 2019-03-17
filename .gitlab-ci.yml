@@ -7,5 +7,5 @@ image: busybox:latest
 test1:
   stage: test
   script: 
-    - sh script.sh $$HOME/test 10 50000
+    - sh script.sh $HOME/test 10 50000
     - du -hs $HOME/test/*
