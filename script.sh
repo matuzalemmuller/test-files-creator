@@ -73,7 +73,11 @@ while [ $NUMBER_OF_FILES_TO_BE_DELETED -gt 0 ]; do
     NUMBER_OF_FILES_AVAIL=$(ls -1 $TEST_FOLDER | wc -l)
     FILES=($TEST_FOLDER/*)
     FILE_TO_DELETE="${FILES[$RANDOM % $NUMBER_OF_FILES_AVAIL]}"
-    rm $FILE_TO_DELETE
+    if [[ -d $FILE_TO_DELETE ]]; then
+        rm -rf $FILE_TO_DELETE
+    else
+        rm $FILE_TO_DELETE
+    fi
     NUMBER_OF_FILES_TO_BE_DELETED=$(($NUMBER_OF_FILES_TO_BE_DELETED-1))
 done
 
@@ -82,6 +86,9 @@ while [ $NUMBER_OF_FILES_TO_BE_MODIFIED -gt 0 ]; do
     NUMBER_OF_FILES_AVAIL=$(ls -1 $TEST_FOLDER | wc -l)
     FILES=($TEST_FOLDER/*)
     FILE_TO_MODIFY="${FILES[$RANDOM % $NUMBER_OF_FILES_AVAIL]}"
+    if [[ -d $FILE_TO_MODIFY ]]; then
+        continue
+    fi
     dd if=/dev/urandom of=$FILE_TO_MODIFY bs=1024 count=$FILE_SIZE
     NUMBER_OF_FILES_TO_BE_MODIFIED=$(($NUMBER_OF_FILES_TO_BE_MODIFIED-1))
 done
