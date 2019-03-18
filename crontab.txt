@@ -1,0 +1,32 @@
+# Example of crontab script that will run hourly/daily
+# and creates multiple files in multiple folders
+MAILTO=""
+TEST_FOLDER=$HOME/test
+
+0 * * * * $HOME/script.sh $TEST_FOLDER 5000 10 2 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/a 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/b 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/c 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/d 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/e 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/f 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/g 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/h 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/i 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/j 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/k 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/l 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/m 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/n 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/o 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/p 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/q 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/r 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/s 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/t 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/u 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/v 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/w 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/x 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/y 50000 5 1 2
+0 0 * * * $HOME/script.sh $TEST_FOLDER/z 50000 5 1 2
