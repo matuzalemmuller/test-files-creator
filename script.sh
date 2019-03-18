@@ -68,7 +68,6 @@ while [ $NUMBER_OF_FILES_CREATED -gt 0 ]; do
     NUMBER_OF_FILES_CREATED=$(($NUMBER_OF_FILES_CREATED-1))
 done
 
-
 # Deletes random files from test folder
 while [ $NUMBER_OF_FILES_TO_BE_DELETED -gt 0 ]; do
     NUMBER_OF_FILES_AVAIL=$(ls -1 $TEST_FOLDER | wc -l)
@@ -77,7 +76,6 @@ while [ $NUMBER_OF_FILES_TO_BE_DELETED -gt 0 ]; do
     rm $FILE_TO_DELETE
     NUMBER_OF_FILES_TO_BE_DELETED=$(($NUMBER_OF_FILES_TO_BE_DELETED-1))
 done
-
 
 # Modifies random files from test folder
 while [ $NUMBER_OF_FILES_TO_BE_MODIFIED -gt 0 ]; do
