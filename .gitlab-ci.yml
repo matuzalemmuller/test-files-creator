@@ -2,10 +2,10 @@
 # see https://docs.gitlab.com/ce/ci/yaml/README.html for all available options
 
 # you can delete this line if you're not using Docker
-image: busybox:latest
+image: ubuntu:xenial
 
 test1:
   stage: test
   script: 
-    - sh script.sh $HOME/test 10 50000
+    - ./script.sh $HOME/test 50000 10 2 4
     - du -hs $HOME/test/*

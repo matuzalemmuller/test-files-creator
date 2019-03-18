@@ -1,21 +1,22 @@
 # Test files creator
 
 ## Description
-Script to be used by [crontab](https://en.wikipedia.org/wiki/Cron) to create, delete and modify test files on a scheduled basis. Script will create `x` files, delete 1 file and modify 1 file per run.
+Script to be used by [crontab](https://en.wikipedia.org/wiki/Cron) to create, delete and modify test files on a scheduled basis.
 
 ## Usage
 
 ### Script
 
 ```
-./script.sh <folder> <number_of_files> <file_size_KB>
+./script.sh <folder> <file_size_KB> <files_created> <files_deleted> <files_modified> 
 ```
 
-* `<folder>` is the path of where the test folder will be created and files will be saved.
-* `<number_of_files>` is the number of files that will be created.
-* `<file_size_KB>` is the size of the files that will be created, in KB.
+* `<folder>` is the path of where the test folder will be created and files will be saved. Default value is `$HOME/test`.
+* `<file_size_KB>` is the size of the files that will be created, in KB. Default value is `50000` (which is 50MB).
+* `<files_created>` is the number of files that will be created. Default value is `5`.
+* `<files_deleted>` is the number of files that will be deleted. Default value is `1`.
+* `<files_modified>` is the number of files that will be modified. Default value is `2`.
 
-If no arguments are given, the test folder will be created at `$HOME/test` and two files of 50MB will be created per run.
 
 ### Crontab
 
