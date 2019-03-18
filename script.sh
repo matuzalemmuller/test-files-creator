@@ -2,23 +2,46 @@
 
 # Defines path of test folder where files will be created
 if [ -z "$1" ]; then
-    TEST_FOLDER=$HOME/test
+    TEST_FOLDER=$HOME/dev/test-files-creator/test
 else
     TEST_FOLDER=$1
 fi
 
-# Defines number of test files created
-if [ -z "$2" ]; then
-    NUMBER_OF_FILES_CREATED=2
-else
-    NUMBER_OF_FILES_CREATED=$2
-fi
-
 # Defines size of test files in KB
-if [ -z "$3" ]; then
+if [ -z "$2" ]; then
     FILE_SIZE=50000
 else
-    FILE_SIZE=$3
+    FILE_SIZE=$2
+fi
+
+# Defines number of test files created
+if [ -z "$3" ]; then
+    NUMBER_OF_FILES_CREATED=5
+else
+    NUMBER_OF_FILES_CREATED=$3
+fi
+
+# Defines number of test files to be deleted
+if [ -z "$4" ]; then
+    NUMBER_OF_FILES_TO_BE_DELETED=1
+else
+    NUMBER_OF_FILES_TO_BE_DELETED=$4
+    if [ $NUMBER_OF_FILES_TO_BE_DELETED -ge $NUMBER_OF_FILES_CREATED ]; then
+        echo "Number of files to be deleted is invalid!"
+        exit 1
+    fi
+fi
+
+# Defines number of test files to be modified
+if [ -z "$5" ]; then
+    NUMBER_OF_FILES_TO_BE_MODIFIED=2
+else
+    NUMBER_OF_FILES_TO_BE_MODIFIED=$5 
+    VALID_NUMBER=$(($NUMBER_OF_FILES_CREATED - $NUMBER_OF_FILES_TO_BE_DELETED))
+    if [ $NUMBER_OF_FILES_TO_BE_MODIFIED -ge $VALID_NUMBER ]; then
+        echo "Number of files to be modified is invalid!"
+        exit 1
+    fi
 fi
 
 # Checks if folder where files will be created exists
@@ -32,10 +55,10 @@ fi
 # Creates test files
 # Files are named as UUID if uuidgen is avail, otherwise files are named
 # using date + random
-while [  $NUMBER_OF_FILES_CREATED -gt 0 ]; do
+while [ $NUMBER_OF_FILES_CREATED -gt 0 ]; do
     if [ -z $(command -v uuidgen) ]; then
         DATE=$(date +%s)
-        FILENAME=$(($DATE+$RANDOM))
+        FILENAME=$(($DATE + $RANDOM))
     else
         FILENAME=$(uuidgen)
     fi
@@ -45,10 +68,22 @@ while [  $NUMBER_OF_FILES_CREATED -gt 0 ]; do
     NUMBER_OF_FILES_CREATED=$(($NUMBER_OF_FILES_CREATED-1))
 done
 
-# Deletes random file from test folder
-FILE_TO_DELETE=$(ls $TEST_FOLDER | sort -g | head -1)
-rm $TEST_FOLDER/$FILE_TO_DELETE
 
-# Modifies random file from test folder
-FILE_TO_MODIFY=$(ls $TEST_FOLDER | sort -g | head -1)
-dd if=/dev/zero of=$TEST_FOLDER/$FILE_TO_MODIFY bs=1024 count=$FILE_SIZE
+# Deletes random files from test folder
+while [ $NUMBER_OF_FILES_TO_BE_DELETED -gt 0 ]; do
+    NUMBER_OF_FILES_AVAIL=$(ls -1 $TEST_FOLDER | wc -l)
+    FILES=($TEST_FOLDER/*)
+    FILE_TO_DELETE="${FILES[$RANDOM % $NUMBER_OF_FILES_AVAIL]}"
+    rm $FILE_TO_DELETE
+    NUMBER_OF_FILES_TO_BE_DELETED=$(($NUMBER_OF_FILES_TO_BE_DELETED-1))
+done
+
+
+# Modifies random files from test folder
+while [ $NUMBER_OF_FILES_TO_BE_MODIFIED -gt 0 ]; do
+    NUMBER_OF_FILES_AVAIL=$(ls -1 $TEST_FOLDER | wc -l)
+    FILES=($TEST_FOLDER/*)
+    FILE_TO_MODIFY="${FILES[$RANDOM % $NUMBER_OF_FILES_AVAIL]}"
+    dd if=/dev/zero of=$FILE_TO_MODIFY bs=1024 count=$FILE_SIZE
+    NUMBER_OF_FILES_TO_BE_MODIFIED=$(($NUMBER_OF_FILES_TO_BE_MODIFIED-1))
+done
