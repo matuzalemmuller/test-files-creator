@@ -63,7 +63,7 @@ while [ $NUMBER_OF_FILES_CREATED -gt 0 ]; do
         FILENAME=$(uuidgen)
     fi
 
-    dd if=/dev/zero of=$TEST_FOLDER/$FILENAME bs=1024 count=$FILE_SIZE
+    dd if=/dev/urandom of=$TEST_FOLDER/$FILENAME bs=1024 count=$FILE_SIZE
 
     NUMBER_OF_FILES_CREATED=$(($NUMBER_OF_FILES_CREATED-1))
 done
@@ -82,6 +82,6 @@ while [ $NUMBER_OF_FILES_TO_BE_MODIFIED -gt 0 ]; do
     NUMBER_OF_FILES_AVAIL=$(ls -1 $TEST_FOLDER | wc -l)
     FILES=($TEST_FOLDER/*)
     FILE_TO_MODIFY="${FILES[$RANDOM % $NUMBER_OF_FILES_AVAIL]}"
-    dd if=/dev/zero of=$FILE_TO_MODIFY bs=1024 count=$FILE_SIZE
+    dd if=/dev/urandom of=$FILE_TO_MODIFY bs=1024 count=$FILE_SIZE
     NUMBER_OF_FILES_TO_BE_MODIFIED=$(($NUMBER_OF_FILES_TO_BE_MODIFIED-1))
 done
