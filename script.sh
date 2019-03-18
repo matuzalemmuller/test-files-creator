@@ -2,7 +2,7 @@
 
 # Defines path of test folder where files will be created
 if [ -z "$1" ]; then
-    TEST_FOLDER=$HOME/dev/test-files-creator/test
+    TEST_FOLDER=$HOME/test
 else
     TEST_FOLDER=$1
 fi
