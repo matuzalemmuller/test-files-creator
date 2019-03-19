@@ -1,7 +1,7 @@
 # Example of crontab script that will run hourly/daily
 # and creates multiple files in multiple folders
 MAILTO=""
-SCHELL=/bin/bash
+SHELL=/bin/bash
 SCRIPT=/tmp/script.sh
 TEST_FOLDER=/tmp/test
 
