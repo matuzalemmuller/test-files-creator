@@ -1,8 +1,9 @@
 # Example of crontab script that will run hourly/daily
 # and creates multiple files in multiple folders
 MAILTO=""
-SCRIPT=$HOME/script.sh
-TEST_FOLDER=$HOME/test
+SCHELL=/bin/bash
+SCRIPT=/tmp/script.sh
+TEST_FOLDER=/tmp/test
 
 0 * * * * $SCRIPT $TEST_FOLDER 5000 10 2 2
 0 0 * * * $SCRIPT $TEST_FOLDER/a 50000 5 1 2
