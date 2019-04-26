@@ -58,7 +58,7 @@ fi
 while [ $NUMBER_OF_FILES_CREATED -gt 0 ]; do
     if [ -z $(command -v uuidgen) ]; then
         DATE=$(date +%s)
-        FILENAME=$(($DATE + $RANDOM))
+        FILENAME="$(($DATE + $RANDOM))$RANDOM"
     else
         FILENAME=$(uuidgen)
     fi
