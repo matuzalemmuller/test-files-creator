@@ -4,8 +4,13 @@
 # you can delete this line if you're not using Docker
 image: ubuntu:xenial
 
-test1:
-  stage: test
+test:
+  stage: run
   script: 
     - ./script.sh $HOME/test 50000 10 2 4
     - du -hs $HOME/test/*
+  
+  stage: test
+  script:
+    - cd $HOME/test
+    - if [[ $(ls -1 | wc -l) -eq 8 ]] ; then exit 0 ; else exit 1; fi
