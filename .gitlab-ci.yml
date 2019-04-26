@@ -4,21 +4,10 @@
 # you can delete this line if you're not using Docker
 image: ubuntu:xenial
 
-stages:
-  - build
-  - test
-
-create:
-  stage: build
+job:
+  stage: test
   script: 
     - ./script.sh $HOME/test 50000 10 2 4
-  artifacts:
-    paths:
-      - $HOME/test
-
-verify:
-  stage: test
-  script:
     - cd $HOME/test
     - du -hs *
     - if [[ $(ls -1 | wc -l) -eq 8 ]] ; then exit 0 ; else exit 1; fi
