@@ -4,6 +4,10 @@
 # you can delete this line if you're not using Docker
 image: ubuntu:xenial
 
+stages:
+  - build
+  - test
+
 test:
   stage: build
   script: 
