@@ -5,7 +5,7 @@
 image: ubuntu:xenial
 
 test:
-  stage: run
+  stage: build
   script: 
     - ./script.sh $HOME/test 50000 10 2 4
     - du -hs $HOME/test/*
