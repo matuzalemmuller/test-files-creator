@@ -12,10 +12,13 @@ create:
   stage: build
   script: 
     - ./script.sh $HOME/test 50000 10 2 4
-    - du -hs $HOME/test/*
+  artifacts:
+    paths:
+      - $HOME/test
 
 verify:
   stage: test
   script:
     - cd $HOME/test
+    - du -hs *
     - if [[ $(ls -1 | wc -l) -eq 8 ]] ; then exit 0 ; else exit 1; fi
