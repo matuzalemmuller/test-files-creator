@@ -8,12 +8,13 @@ stages:
   - build
   - test
 
-job:
+create:
   stage: build
   script: 
     - ./script.sh $HOME/test 50000 10 2 4
     - du -hs $HOME/test/*
-  
+
+verify:
   stage: test
   script:
     - cd $HOME/test
