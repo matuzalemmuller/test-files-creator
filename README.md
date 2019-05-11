@@ -30,4 +30,7 @@ Crontab file:
 0 * * * * $HOME/scripts/script.sh $HOME/tests
 ```
 
-Script from folder `$HOME/scripts/script.sh` will be run hourly and test files will be created at `$HOME/tests`.
+Script from folder `$HOME/scripts/script.sh` will be run hourly.
+* 5 test files will be created at `$HOME/tests`.
+* 1 file from `$HOME/tests` will be deleted.
+* 2 files from `$HOME/tests` will be modified.
