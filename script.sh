@@ -52,20 +52,30 @@ if [ ! -d "$TEST_FOLDER" ]; then
     fi
 fi
 
+# Get location of script so log file can be created
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+
 # Creates test files
 # Files are named as UUID if uuidgen is avail, otherwise files are named
 # using date + random
 while [ $NUMBER_OF_FILES_CREATED -gt 0 ]; do
     if [ -z $(command -v uuidgen) ]; then
         DATE=$(date +%s)
-        FILENAME="$(($DATE + $RANDOM))$RANDOM"
+        FILE_TO_CREATE="$(($DATE + $RANDOM))$RANDOM"
     else
-        FILENAME=$(uuidgen)
+        FILE_TO_CREATE=$(uuidgen)
     fi
 
-    dd if=/dev/urandom of=$TEST_FOLDER/$FILENAME bs=1024 count=$FILE_SIZE
+    dd if=/dev/urandom of=$TEST_FOLDER/$FILE_TO_CREATE bs=1024 count=$FILE_SIZE
 
     NUMBER_OF_FILES_CREATED=$(($NUMBER_OF_FILES_CREATED-1))
+    date +"%H:%M:%S %D - CREATE - $TEST_FOLDER/$FILE_TO_CREATE - $FILE_SIZE KB" >> $DIR/script.log
 done
 
 # Deletes random files from test folder
@@ -79,6 +89,7 @@ while [ $NUMBER_OF_FILES_TO_BE_DELETED -gt 0 ]; do
         rm $FILE_TO_DELETE
     fi
     NUMBER_OF_FILES_TO_BE_DELETED=$(($NUMBER_OF_FILES_TO_BE_DELETED-1))
+    date +"%H:%M:%S %D - DELETE - $FILE_TO_DELETE" >> $DIR/script.log
 done
 
 # Modifies random files from test folder
@@ -91,4 +102,5 @@ while [ $NUMBER_OF_FILES_TO_BE_MODIFIED -gt 0 ]; do
     fi
     dd if=/dev/urandom of=$FILE_TO_MODIFY bs=1024 count=$FILE_SIZE
     NUMBER_OF_FILES_TO_BE_MODIFIED=$(($NUMBER_OF_FILES_TO_BE_MODIFIED-1))
+    date +"%H:%M:%S %D - MODIFY - $FILE_TO_MODIFY" >> $DIR/script.log
 done
