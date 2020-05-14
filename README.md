@@ -1,7 +1,5 @@
 # Test files creator
-*Hosted at [GitHub](https://github.com/matuzalemmuller/test-files-creator) and mirrored to [GitLab](https://gitlab.com/matuzalemmuller/test-files-creator).*
 
-## Description
 Script to be used by [crontab](https://en.wikipedia.org/wiki/Cron) to create, delete and modify test files on a scheduled basis.
 
 ## Usage
