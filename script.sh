@@ -10,7 +10,7 @@
 
 # Checks if values for files to be created, deleted and modified are 0
 if [ ! -z "$3" ] && [ ! -z "$4" ] && [ ! -z "$5" ]; then
-  if [ $3 -eq 0 ] && [ $4 -eq 0 ] && [ $5 -eq 0 ]; then
+  if [ "$3" -eq 0 ] && [ "$4" -eq 0 ] && [ "$5" -eq 0 ]; then
     echo "No changes"
     exit 0
   fi
@@ -27,7 +27,7 @@ fi
 # If folder doesn't exist, creates folder
 if [ ! -d "$TEST_FOLDER" ]; then
   if [ ! -L "$LINK_OR_DIR" ]; then
-    mkdir $TEST_FOLDER
+    mkdir "$TEST_FOLDER"
     CREATE_FOLDER=1
   fi
 else
@@ -54,11 +54,11 @@ if [ -z "$4" ]; then
   NUMBER_OF_FILES_TO_BE_DELETED=0
 else
   NUMBER_OF_FILES_TO_BE_DELETED=$4
-  VALID_NUMBER=$(($NUMBER_OF_FILES_AVAIL + $NUMBER_OF_FILES_CREATED))
-  if [ $NUMBER_OF_FILES_TO_BE_DELETED -gt $VALID_NUMBER ]; then
+  VALID_NUMBER=$((NUMBER_OF_FILES_AVAIL + NUMBER_OF_FILES_CREATED))
+  if [ "$NUMBER_OF_FILES_TO_BE_DELETED" -gt "$VALID_NUMBER" ]; then
     echo "Number of files to be deleted is invalid!"
     if [ $CREATE_FOLDER -eq 1 ]; then
-      rm -rf $TEST_FOLDER
+      rm -rf "$TEST_FOLDER"
     fi
     exit 1
   fi
@@ -69,9 +69,9 @@ if [ -z "$5" ]; then
   NUMBER_OF_FILES_TO_BE_MODIFIED=0
 else
   NUMBER_OF_FILES_TO_BE_MODIFIED=$5 
-  VALID_NUMBER=$(($NUMBER_OF_FILES_AVAIL + $NUMBER_OF_FILES_CREATED))
-  VALID_NUMBER=$(($VALID_NUMBER - $NUMBER_OF_FILES_TO_BE_DELETED))
-  if [ $NUMBER_OF_FILES_TO_BE_MODIFIED -gt $VALID_NUMBER ]; then
+  VALID_NUMBER=$((NUMBER_OF_FILES_AVAIL + NUMBER_OF_FILES_CREATED))
+  VALID_NUMBER=$((VALID_NUMBER - NUMBER_OF_FILES_TO_BE_DELETED))
+  if [ "$NUMBER_OF_FILES_TO_BE_MODIFIED" -gt "$VALID_NUMBER" ]; then
     echo "Number of files to be modified is invalid!"
     if [ $CREATE_FOLDER -eq 1 ]; then
       rm -rf $TEST_FOLDER
@@ -107,14 +107,14 @@ while [ $NUMBER_OF_FILES_CREATED -gt 0 ]; do
 done
 
 # Deletes random files from test folder
-while [ $NUMBER_OF_FILES_TO_BE_DELETED -gt 0 ]; do
+while [ "$NUMBER_OF_FILES_TO_BE_DELETED" -gt 0 ]; do
   NUMBER_OF_FILES_AVAIL=$(ls -1 $TEST_FOLDER | wc -l)
   FILES=($TEST_FOLDER/*)
   FILE_TO_DELETE="${FILES[$RANDOM % $NUMBER_OF_FILES_AVAIL]}"
-  if [[ -d $FILE_TO_DELETE ]]; then
-    rm -rf $FILE_TO_DELETE
+  if [[ -d "$FILE_TO_DELETE" ]]; then
+    rm -rf "$FILE_TO_DELETE"
   else
-    rm $FILE_TO_DELETE
+    rm "$FILE_TO_DELETE"
   fi
   NUMBER_OF_FILES_TO_BE_DELETED=$(($NUMBER_OF_FILES_TO_BE_DELETED-1))
   date +"%H:%M:%S %D - DELETE - $FILE_TO_DELETE" >> $DIR/script.log
