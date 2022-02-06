@@ -2,10 +2,10 @@
 
 ########################## USAGE ##########################
 #
-# ./script.sh <folder> <file_size_KB> <n_create> <n_deleted> <n_modified> 
+# ./script.sh <folder> <file_size_KB> <files_created> <files_deleted> <files_modified> 
 #
 # Example
-# ./script.sh files 1024KB 10 2 8
+# ./script.sh test-folder 1024 10 2 8
 ###########################################################
 
 # Checks if values for files to be created, deleted and modified are 0
