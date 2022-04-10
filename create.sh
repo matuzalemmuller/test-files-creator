@@ -15,10 +15,7 @@
 #   - [REQUIRED] -c, --create: number of files to create
 #   - [OPTIONAL] -l, --log: log file
 #   - [OPTIONAL] --csv: log file output in csv format
-#   - [OPTIONAL] --md5: includes md5 hash in log file. Only works is csv
-#                       logging is enabled
-#   - [OPTIONAL] --sha256: includes sha256 hash in log file. Only works if csv
-#                          logging is enabled
+#                            Supported values: md5 and sha256
 #
 # Example:
 #   Create 10 files in the folder 'test-folder', with 1 MB of size each.
@@ -61,17 +58,17 @@ for i in "$@"; do
       echo "Missing parameter for --log"
       exit 1
       ;;
-    -csv)
+    --csv)
       LOG_FORMAT=CSV;
       shift
       ;;
-    -sha256)
-      HASH_ALG=sha256
+    -h=*|--hash=*)
+      HASH_ALG="${i#*=}"
       shift
       ;;
-    -md5)
-      HASH_ALG=md5
-      shift
+    -h|--hash)
+      echo "Missing parameter for --hash"
+      exit 1
       ;;
     -v|--verbose)
       VERBOSE=YES
@@ -151,6 +148,9 @@ if [ -n "$LOG_FILE" ]; then
           echo "Can't log hash because sha256sum is not installed"
           exit 1
         fi
+      else
+        echo "Hash algorithm not supported"
+        exit 1
       fi
     else
       echo "Hash argument detected but no csv argument. Falling back to text log"
