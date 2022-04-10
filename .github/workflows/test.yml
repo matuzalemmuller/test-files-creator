@@ -7,7 +7,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Create test file using script
-        run: ./test-files-creator.sh -c=1 -s=1000 -o=dir -h=sha256 --csv
+        run: ./test-files-creator.sh -c=1 -s=1000 -o=dir -l=log.csv -h=sha256 --csv
       - name: Confirm that file is created
         run: if [ $(find dir/* | wc -l) -ne 1 ]; then exit 1; fi
       - name: Check file hash
