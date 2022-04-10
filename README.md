@@ -11,14 +11,14 @@ Creates files with random content using common bash expressions and tools. The s
 - [`REQUIRED`] -c, --create: number of files to create;
 - [`OPTIONAL`] -l, --log: log file;
 - [`OPTIONAL`] --csv: log file output in csv format;
-- [`OPTIONAL`] -h, --hash: includes hash in log file. Requires --csv. Supported values: md5 and sha256.
+- [`OPTIONAL`] -h, --hash: includes hash in log file in csv format. Supported values: md5 and sha256.
 
 ### Example
 
 Create 10 files in the folder 'test-folder', with 1 MB of size each.
 
 ```sh
-./create.sh -o=test-folder -s=1024 -c=10
+./test-files-creator.sh -o=test-folder -s=1024 -c=10
 ```
 
 ---

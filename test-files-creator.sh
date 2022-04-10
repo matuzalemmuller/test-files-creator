@@ -19,7 +19,7 @@
 #
 # Example:
 #   Create 10 files in the folder 'test-folder', with 1 MB of size each.
-#   ./create.sh -o=test-folder -s=1024 -c=10
+#   ./test-files-creator.sh -o=test-folder -s=1024 -c=10
 ###############################################################################
 
 # Parses arguments. Based on https://stackoverflow.com/a/14203146
@@ -51,7 +51,6 @@ for i in "$@"; do
       ;;
     -l=*|--log=*)
       LOG_FILE="${i#*=}"
-      LOG_FORMAT=TXT
       shift # past argument=value
       ;;
     -l|--log)
@@ -59,7 +58,7 @@ for i in "$@"; do
       exit 1
       ;;
     --csv)
-      LOG_FORMAT=CSV;
+      LOG_FORMAT=CSV
       shift
       ;;
     -h=*|--hash=*)
@@ -127,6 +126,11 @@ fi
 # Updates variable value to use absolute path (useful to log file path)
 OUTPUT_FOLDER=$(realpath ${OUTPUT_FOLDER})
 
+# Defaults log format to TXT is CSV is not defined
+if ! [ -n "$LOG_FORMAT" ]; then
+  LOG_FORMAT=TXT
+fi
+
 # Create log file
 if [ -n "$LOG_FILE" ]; then
   touch ${LOG_FILE} > /dev/null 2>&1
@@ -137,23 +141,21 @@ if [ -n "$LOG_FILE" ]; then
 
   # Checks if hash program is installed if hash logging is enabled
   if [ -n "$HASH_ALG" ]; then
-    if [ "$LOG_FORMAT" = "CSV" ]; then
-      if [ "$HASH_ALG" = "md5" ]; then
-        if [ -z $(command -v md5sum) ]; then
-          echo "Can't log hash because md5sum is not installed"
-          exit 1
-        fi
-      elif [ "$HASH_ALG" = "sha256" ]; then
-        if [ -z $(command -v sha256sum) ]; then
-          echo "Can't log hash because sha256sum is not installed"
-          exit 1
-        fi
-      else
-        echo "Hash algorithm not supported"
+    if [ "$HASH_ALG" = "md5" ]; then
+      LOG_FORMAT=CSV
+      if [ -z $(command -v md5sum) ]; then
+        echo "Can't log hash because md5sum is not installed"
+        exit 1
+      fi
+    elif [ "$HASH_ALG" = "sha256" ]; then
+      LOG_FORMAT=CSV
+      if [ -z $(command -v sha256sum) ]; then
+        echo "Can't log hash because sha256sum is not installed"
         exit 1
       fi
     else
-      echo "Hash argument detected but no csv argument. Falling back to text log"
+      echo "Hash algorithm not supported"
+      exit 1
     fi
   fi
 fi
