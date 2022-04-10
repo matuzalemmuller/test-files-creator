@@ -1,34 +1,23 @@
 # Test files creator
 
-Script to be used by [crontab](https://en.wikipedia.org/wiki/Cron) to create, delete and modify test files on a scheduled basis.
+## Description
 
-## Usage
+Creates files with random content using common bash expressions and tools. The size of the files is specified in **bytes**.
 
-### Script
+### Parameters
 
+- [`REQUIRED`] -o, --output: folder where files will be saved
+- [`REQUIRED`] -s, --size: size of the files to be created
+- [`REQUIRED`] -c, --create: number of files to create
+- [`OPTIONAL`] -l, --log: log file
+- [`OPTIONAL`] --csv: log file output in csv format
+- [`OPTIONAL`] --md5: includes md5 hash in log file. Only works is csv logging is enabled
+- [`OPTIONAL`] --sha256: includes sha256 hash in log file. Only works if csv logging is enabled
+
+### Example
+
+Create 10 files in the folder 'test-folder', with 1 MB of size each.
+
+```sh
+./create.sh -o=test-folder -s=1024 -c=10
 ```
-./script.sh <folder> <file_size_KB> <files_created> <files_deleted> <files_modified> 
-```
-
-* `<folder>` is the path of where the test folder will be created and files will be saved. Default value is `$HOME/test`.
-* `<file_size_KB>` is the size of the files that will be created, in KB. Default value is `50000` (which is 50MB).
-* `<files_created>` is the number of files that will be created. Default value is `5`.
-* `<files_deleted>` is the number of files that will be deleted. Default value is `0`.
-* `<files_modified>` is the number of files that will be modified. Default value is `0`.
-
-
-### Crontab
-
-Check the [docs](https://linux.die.net/man/1/crontab) for instructions on how to use `crontab`. 
-
-### Example of usage
-
-Crontab file:
-```
-0 * * * * $HOME/scripts/script.sh $HOME/tests 10 2 8
-```
-
-Script from folder `$HOME/scripts/script.sh` will be run hourly.
-* 10 test files will be created at `$HOME/tests`.
-* 2 files from `$HOME/tests` will be deleted.
-* 8 files from `$HOME/tests` will be modified.
