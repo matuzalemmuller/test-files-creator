@@ -1,9 +1,11 @@
 name: Basic Test
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Basic Test:
     runs-on: ubuntu-20.04
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Create test file using script
         run: ./test-files-creator.sh -c=1 -s=1000 -o=dir -h=sha256 --csv
       - name: Confirm that file is created
