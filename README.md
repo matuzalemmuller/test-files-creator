@@ -9,8 +9,9 @@ Creates files with random content using common bash expressions and tools. The s
 - [`REQUIRED`] -o, --output: folder where files will be saved;
 - [`REQUIRED`] -s, --size: size of the files to be created (in **bytes**);
 - [`REQUIRED`] -c, --create: number of files to create;
+- [`OPTIONAL`] --help: Prints help;
 - [`OPTIONAL`] -l, --log: log file;
-- [`OPTIONAL`] --csv: log file output in csv format;
+- [`OPTIONAL`] -csv, --csv: log file output in csv format;
 - [`OPTIONAL`] -h, --hash: includes hash in log file in csv format. Supported values: md5 and sha256.
 
 ### Example

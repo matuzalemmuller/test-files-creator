@@ -10,16 +10,18 @@
 #   The size of the files is specified in **bytes**.
 #
 # Parameters:
-#   - [REQUIRED] -o, --output: folder where files will be saved
-#   - [REQUIRED] -s, --size: size of the files to be created
-#   - [REQUIRED] -c, --create: number of files to create
-#   - [OPTIONAL] -l, --log: log file
-#   - [OPTIONAL] --csv: log file output in csv format
-#                            Supported values: md5 and sha256
+#   - [REQUIRED] -o,   --output: folder where files will be saved
+#   - [REQUIRED] -s,   --size:   size of the files to be created
+#   - [REQUIRED] -c,   --create: number of files to create
+#   - [OPTIONAL] --help:         prints help
+#   - [OPTIONAL] -l,   --log:    log file location
+#   - [OPTIONAL] -csv, --csv:    log file output in csv format
+#   - [OPTIONAL] -h,   --hash:   includes hash in log file in csv format
+#                                Supported values: md5 and sha256
 #
 # Example:
 #   Create 10 files in the folder 'test-folder', with 1 MB of size each.
-#   ./test-files-creator.sh -o=test-folder -s=1024 -c=10
+#   ./test-files-creator.sh -o=test-folder -s=1024 -c=10 -hash=md5
 ###############################################################################
 
 # Parses arguments. Based on https://stackoverflow.com/a/14203146
@@ -57,7 +59,7 @@ for i in "$@"; do
       echo "Missing parameter for --log"
       exit 1
       ;;
-    --csv)
+    -csv|--csv)
       LOG_FORMAT=CSV
       shift
       ;;
@@ -71,6 +73,10 @@ for i in "$@"; do
       ;;
     -v|--verbose)
       VERBOSE=YES
+      shift
+      ;;
+    --help)
+      PRINT_HELP=YES
       shift
       ;;
     -*|--*)
@@ -96,6 +102,27 @@ fi
 
 ########################### ARGUMENT VALIDATION ###############################
 
+if [ -n "$PRINT_HELP" ]; then
+  echo " Description"
+  echo "   Creates files with random content using common bash expressions and"
+  echo "   tools. The size of the files is specified in **bytes**."
+  echo ""
+  echo " Parameters:"
+  echo "  - [REQUIRED] -o,   --output: folder where files will be saved"
+  echo "  - [REQUIRED] -s,   --size:   size of the files to be created"
+  echo "  - [REQUIRED] -c,   --create: number of files to create"
+  echo "  - [OPTIONAL] --help:         prints help"
+  echo "  - [OPTIONAL] -l,   --log:    log file location"
+  echo "  - [OPTIONAL] -csv, --csv:    log file output in csv format"
+  echo "  - [OPTIONAL] -h,   --hash:   includes hash in log file in csv format"
+  echo "                               Supported values: md5 and sha256"
+  echo ""
+  echo " Example:"
+  echo "   Create 10 files in the folder 'test-folder', with 1 MB of size each."
+  echo ""
+  echo "   ./test-files-creator.sh -o=test-folder -s=1024 -c=10 -hash=md5"
+  exit 0
+fi
 
 # Check if file size is integer and greater than 0
 if ! [ "$FILE_SIZE" -gt 0 > /dev/null 2>&1 ]; then
