@@ -12,5 +12,5 @@ jobs:
         run: if [ $(find dir/* | wc -l) -ne 1 ]; then exit 1; fi
       - name: Check file hash
         run: |
-            export saved_hash=$(cat log.csv | awk -F';' '{printf "%s", $5}')
+            export saved_hash=$(cat log.csv | awk -F';' '{printf "%s", $4}')
             echo $saved_hash dir/$(ls dir) | sha256sum --check
