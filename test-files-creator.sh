@@ -10,19 +10,19 @@
 #   The size of the files is specified in **bytes**.
 #
 # Parameters:
-#   - [REQUIRED] -o,   --output:   folder where files will be saved
-#   - [REQUIRED] -s,   --size:     size of the files to be created
-#   - [REQUIRED] -n,   --n_files:  number of files to create
-#   - [OPTIONAL] -v,   --verbose:  prints verbose output
-#   - [OPTIONAL] -p,   --progress: shows progress bar
-#   - [OPTIONAL] -l,   --log:      log file location
-#   - [OPTIONAL] -csv, --csv:      log file output in csv format
-#   - [OPTIONAL] -h,   --hash:     includes hash in log file in csv format
-#                                  Supported values: md5 and sha256
-#   - [OPTIONAL] --help:           prints help
+#   - [REQUIRED] -o,   --output:      folder where files will be saved
+#   - [REQUIRED] -s,   --size:        size of the files to be created
+#   - [REQUIRED] -n,   --n_files:     number of files to create
+#   - [OPTIONAL] -v,   --verbose:     prints verbose output. Affects performance
+#   - [OPTIONAL] -p,   --progressbar: shows progress bar. Affects performance
+#   - [OPTIONAL] -l,   --log:         saves a log file in the location provided. Affects performance
+#   - [OPTIONAL] -csv, --csv:         saves log file in csv format
+#   - [OPTIONAL] -h,   --hash:        includes hash in log file when --csv is enabled
+#                                     Supported values: md5 and sha256
+#   - [OPTIONAL] --help:              prints help
 #
 # Example:
-#   Create 5 files in the folder 'test-folder', with 1 MB of size each.
+#   Create 5 files in the folder '/tmp', with 1 MB of size each.
 #   ./test-files-creator.sh -o=/tmp -s=1024 -c=5 -l=/tmp/log.csv -csv -h=md5 -p
 ###############################################################################
 
@@ -77,7 +77,7 @@ for i in "$@"; do
       VERBOSE=YES
       shift
       ;;
-    -p|--progress)
+    -p|--progressbar)
       PRINT_PROGRESS=YES
       shift
       ;;
@@ -102,19 +102,19 @@ if [ -n "$PRINT_HELP" ]; then
   echo "   tools. The size of the files is specified in **bytes**."
   echo ""
   echo " Parameters:"
-  echo "  - [REQUIRED] -o,   --output:   folder where files will be saved"
-  echo "  - [REQUIRED] -s,   --size:     size of the files to be created"
-  echo "  - [REQUIRED] -n,   --n_files:  number of files to create"
-  echo "  - [OPTIONAL] -v,   --verbose:  prints verbose output"
-  echo "  - [OPTIONAL] -p,   --progress: shows progress bar"
-  echo "  - [OPTIONAL] -l,   --log:      log file location"
-  echo "  - [OPTIONAL] -csv, --csv:      log file output in csv format"
-  echo "  - [OPTIONAL] -h,   --hash:     includes hash in log file in csv format"
-  echo "                                 Supported values: md5 and sha256"
-  echo "  - [OPTIONAL] --help:           prints help"
+  echo "  - [REQUIRED] -o,   --output:      folder where files will be saved"
+  echo "  - [REQUIRED] -s,   --size:        size of the files to be created"
+  echo "  - [REQUIRED] -n,   --n_files:     number of files to create"
+  echo "  - [OPTIONAL] -v,   --verbose:     prints verbose output. Affects performance"
+  echo "  - [OPTIONAL] -p,   --progressbar: shows progress bar. Affects performance"
+  echo "  - [OPTIONAL] -l,   --log:         saves a log file in the location provided. Affects performance"
+  echo "  - [OPTIONAL] -csv, --csv:         saves log file in csv format"
+  echo "  - [OPTIONAL] -h,   --hash:        includes hash in log file when --csv is enabled"
+  echo "                                    Supported values: md5 and sha256"
+  echo "  - [OPTIONAL] --help:              prints help"
   echo ""
   echo " Example:"
-  echo "   Create 5 files in the folder 'test-folder', with 1 MB of size each."
+  echo "   Create 5 files in the folder '/tmp', with 1 MB of size each."
   echo "   ./test-files-creator.sh -o=/tmp -s=1024 -c=5 -l=/tmp/log.csv -csv -h=md5 -p"
   exit 0
 fi
@@ -264,9 +264,9 @@ while [ $CREATE -gt 0 ]; do
     fi
     # Saves log to file
     if [ "$LOG_FORMAT" = "TXT" ]; then
-      date +"%H:%M:%S %D - CREATE - $FILE_SIZE KB - $OUTPUT_FOLDER/$FILE_NAME" >> $LOG_FILE
+      echo $(date +"%H:%M:%S %D - CREATE - $FILE_SIZE KB - $OUTPUT_FOLDER/$FILE_NAME") >> $LOG_FILE
     elif [ "$LOG_FORMAT" = "CSV" ]; then
-      date +'"%H:%M:%S %D";'$FILE_SIZE' KB;"'$OUTPUT_FOLDER'/'$FILE_NAME'";'${hash}'' >> $LOG_FILE
+      echo $(date +'"%H:%M:%S %D";'$FILE_SIZE' KB;"'$OUTPUT_FOLDER'/'$FILE_NAME'";'${hash}'') >> $LOG_FILE
     fi
   fi
 
