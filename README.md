@@ -28,7 +28,7 @@ Create 5 files in the folder `/tmp`, with 1 MB of size each.
 
 ## Dockerfile
 
-An alpine-based docker image is available with the script. To run the container, mount the path where files will be created in `/data` and provide the necessary environment variables. To save the logs, also mount a folder to `/log`.
+An alpine-based docker image is available in [DockerHub](https://hub.docker.com/r/matuzalemmuller/test-files-creator). To run the container, mount the path where files will be created in `/data` and provide the necessary environment variables. To save the logs, also mount a folder to `/log`.
 
 ```sh
 docker run \
